@@ -10,3 +10,4 @@ def screenshot():
     im.save(file_path + extend + screenshot_information)
 
 screenshot()
+Clipboard Data: 7-2oBjGOW2nwL573jvPWQ9w9bcaVR6UA5BZlBqHWX0Q=

