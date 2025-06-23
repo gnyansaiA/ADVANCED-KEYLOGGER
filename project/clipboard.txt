@@ -1,2 +1,6 @@
 Clipboard Data:             win32clipboard.OpenClipboard()
 
+Clipboard Data:             win32clipboard.OpenClipboard()
+
+Clipboard Data:             win32clipboard.OpenClipboard()
+
