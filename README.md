@@ -12,7 +12,7 @@ A Python-based keylogger and system information collector for Windows. This proj
 - **Screenshot Capture:** Takes screenshots at intervals.
 - **System Information:** Collects details like hostname, IP addresses, OS, and hardware info.
 - **Encryption:** Encrypts all collected data using Fernet symmetric encryption.
-- **Extensible Output:** Data can be sent via email, uploaded to cloud storage, or stored in a database (see below for ideas).
+- **Extensible Output:** Data can be sent via email, uploaded to cloud storage, or stored in a database (not implemented yet finding a better and more efficient tool or technique to extract.).
 
 ---
 
