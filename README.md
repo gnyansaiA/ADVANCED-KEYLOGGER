@@ -1,6 +1,7 @@
 # Advanced Keylogger
 
-A Python-based keylogger and system information collector for Windows. This project captures keystrokes, clipboard data, audio recordings, screenshots, and system information, then encrypts the collected data for secure storage or transfer.
+A Python-based advanced keylogger and system information collector for Windows.  
+This project captures keystrokes, clipboard data, audio recordings, screenshots, and system information, encrypts the collected data, and uploads it to a MongoDB database for secure remote retrieval.
 
 ---
 
@@ -12,7 +13,7 @@ A Python-based keylogger and system information collector for Windows. This proj
 - **Screenshot Capture:** Takes screenshots at intervals.
 - **System Information:** Collects details like hostname, IP addresses, OS, and hardware info.
 - **Encryption:** Encrypts all collected data using Fernet symmetric encryption.
-- **Extensible Output:** Data can be sent via email, uploaded to cloud storage, or stored in a database (not implemented yet finding a better and more efficient tool or technique to extract.).
+- **MongoDB Upload:** Encrypted files are uploaded to a remote MongoDB database using GridFS.
 
 ---
 
@@ -26,7 +27,7 @@ A Python-based keylogger and system information collector for Windows. This proj
 Install all dependencies with:
 
 ```sh
-pip install pynput pycryptodome cryptography sounddevice scipy pillow requests pymongo pywin32
+pip install pynput pycryptodome cryptography sounddevice scipy pillow requests pymongo gridfs pywin32
 ```
 
 ---
@@ -36,7 +37,7 @@ pip install pynput pycryptodome cryptography sounddevice scipy pillow requests p
 1. **Clone the repository** and navigate to the project directory.
 
 2. **Configure settings**  
-   Edit `keylogger.py` to set file paths, encryption keys, and other parameters as needed.
+   - Edit `project/keylogger.py` to set file paths, encryption keys, and MongoDB URI as needed.
 
 3. **Run the keylogger:**
 
@@ -52,6 +53,10 @@ pip install pynput pycryptodome cryptography sounddevice scipy pillow requests p
    - Screenshot: `project/screenshot.png`
    - Encrypted files: `project/key_log_encrypted.txt`, etc.
 
+5. **MongoDB Storage:**  
+   - Encrypted files are uploaded to your MongoDB database using GridFS.
+   - You can retrieve them from your MongoDB deployment for decryption and analysis.
+
 ---
 
 ## Encryption & Decryption
@@ -60,13 +65,17 @@ pip install pynput pycryptodome cryptography sounddevice scipy pillow requests p
   Use `cryptography/Keygen.py` to generate a new Fernet key.
 
 - **Decryption:**  
-  Use `cryptography/decrypter.py` to decrypt the encrypted files.
+  Use `cryptography/decrypter.py` to decrypt the encrypted files retrieved from MongoDB.
 
 ---
 
-## Extending Data Retrieval
+## Data Retrieval
 
-NOTE: Data retrieval (exfiltration) is not implemented in this version. Still looking for an efficient and functioning tool or technique to securely and reliably retrieve the collected and encrypted data.
+- **Current Method:**  
+  Encrypted files are uploaded to a MongoDB database using GridFS.
+- **Other Methods:**  
+  You can adapt the project to use email, Google Drive, Telegram, FTP/SFTP, or HTTP POST for data retrieval.  
+  See code comments for integration ideas.
 
 ---
 
@@ -77,3 +86,7 @@ Do not use it to monitor devices or accounts without explicit permission.
 The author is not responsible for any misuse.
 
 ---
+
+## License
+
+MIT License
