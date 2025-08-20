@@ -40,3 +40,21 @@ System: Windows 10.0.26100
 Machine: AMD64
 Hostname: Leviathan
 Private IP Address: 192.168.29.147
+Public IP Address: 122.252.228.30
+Processor: Intel64 Family 6 Model 186 Stepping 2, GenuineIntel
+System: Windows 10.0.26100
+Machine: AMD64
+Hostname: Leviathan
+Private IP Address: 169.254.132.236
+Public IP Address: 122.252.228.30
+Processor: Intel64 Family 6 Model 186 Stepping 2, GenuineIntel
+System: Windows 10.0.26100
+Machine: AMD64
+Hostname: Leviathan
+Private IP Address: 169.254.132.236
+Public IP Address: 122.252.228.30
+Processor: Intel64 Family 6 Model 186 Stepping 2, GenuineIntel
+System: Windows 10.0.26100
+Machine: AMD64
+Hostname: Leviathan
+Private IP Address: 169.254.132.236
