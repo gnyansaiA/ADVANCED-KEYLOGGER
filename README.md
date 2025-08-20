@@ -88,3 +88,5 @@ The author is not responsible for any misuse.
 ---
 
 ## License
+
+MIT License
