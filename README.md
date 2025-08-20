@@ -89,4 +89,4 @@ The author is not responsible for any misuse.
 
 ## License
 
-MIT License
+This project is licensed under MIT License.
